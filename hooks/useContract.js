@@ -9,7 +9,8 @@ function useContract() {
 
     useEffect(() => {
         if (active) {
-            contract.current = new Contract(address[chainId][0], abi, library)
+            const signer = library.getSigner(account)
+            contract.current = new Contract(address[chainId][0], abi, signer)
             const transferEvent = contract.current.filters.Transfer(null, null)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

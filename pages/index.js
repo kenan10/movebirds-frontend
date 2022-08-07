@@ -5,11 +5,14 @@ import MintBtn from '../components/MintBtn'
 import ConnectWalletModal from '../components/ConnectWalletModal'
 import { useWeb3React } from '@web3-react/core'
 import { useContract } from '../hooks/useContract'
+import MintParameters from '../components/MintParameters'
 
 export default function Home() {
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [mintedCounter, setMintedCounter] = useState(0)
     const { chainId, account, activate, active, library } = useWeb3React()
+    const [toPayment, setToPayment] = useState(0)
+    const [numberToMint, setNumberToMint] = useState(1)
     const contract = useContract()
 
     useEffect(() => {
@@ -41,9 +44,17 @@ export default function Home() {
                 {active ? (
                     <>
                         <span className='text-4xl text-center border-4 py-4 border-green-400 mb-5'>
-                            {mintedCounter} / 5000
+                            Already minted {mintedCounter} / 5000
                         </span>
-                        <MintBtn>Mint</MintBtn>
+                        <MintParameters
+                            setNumberToMint={setNumberToMint}
+                            numberToMint={numberToMint}
+                            toPayment={toPayment}
+                            setToPayment={setToPayment}
+                        />
+                        <MintBtn numberToMint={numberToMint} amount={toPayment}>
+                            Mint
+                        </MintBtn>
                     </>
                 ) : (
                     <ConnectBtn setIsModalOpen={setIsWalletModalOpen}>
