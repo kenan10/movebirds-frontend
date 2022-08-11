@@ -3,6 +3,7 @@ import Head from 'next/head'
 import ConnectBtn from '../components/ConnectBtn'
 import MintBtn from '../components/MintBtn'
 import ConnectWalletModal from '../components/ConnectWalletModal'
+import Header from '../components/Header'
 import { useWeb3React } from '@web3-react/core'
 import { useContract } from '../hooks/useContract'
 import MintParameters from '../components/MintParameters'
@@ -33,39 +34,18 @@ export default function Home() {
     })
 
     return (
-        <div className='p-96'>
+        <>
             <Head>
-                <title>Mint Movebird</title>
+                <title>Mint Hootis</title>
                 <meta name='description' content='Mint page of movebird' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
 
-            <div className='flex flex-col justify-center'>
-                {active ? (
-                    <>
-                        <span className='text-4xl text-center border-4 py-4 border-green-400 mb-5'>
-                            Already minted {mintedCounter} / 5000
-                        </span>
-                        <MintParameters
-                            setNumberToMint={setNumberToMint}
-                            numberToMint={numberToMint}
-                            toPayment={toPayment}
-                            setToPayment={setToPayment}
-                        />
-                        <MintBtn numberToMint={numberToMint} amount={toPayment}>
-                            Mint
-                        </MintBtn>
-                    </>
-                ) : (
-                    <ConnectBtn setIsModalOpen={setIsWalletModalOpen}>
-                        Connect Wallet
-                    </ConnectBtn>
-                )}
-            </div>
-            <ConnectWalletModal
-                isModalOpen={isWalletModalOpen}
-                setIsModalOpen={setIsWalletModalOpen}
-            />
-        </div>
+            <Header/>
+
+            <main className='bg-rose-light h-screen w-full px-[33rem]'>
+                main
+            </main>
+        </>
     )
 }
