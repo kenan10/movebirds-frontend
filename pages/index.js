@@ -1,41 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import ConnectBtn from '../components/ConnectBtn'
-import MintBtn from '../components/MintBtn'
-import ConnectWalletModal from '../components/ConnectWalletModal'
 import Header from '../components/Header'
-import { useWeb3React } from '@web3-react/core'
-import { useContract } from '../hooks/useContract'
-import MintParameters from '../components/MintParameters'
 import FAQItem from '../components/FAQItem'
 import Image from 'next/image'
-import Button from '../components/Button'
 import faqItems from '../assets/faqItems'
 
 export default function Home() {
-    const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
-    const [mintedCounter, setMintedCounter] = useState(0)
-    const { chainId, account, activate, active, library } = useWeb3React()
-    const [toPayment, setToPayment] = useState(0)
-    const [numberToMint, setNumberToMint] = useState(1)
-    const contract = useContract()
-
-    useEffect(() => {
-        if (active) {
-            async function updateMintedCounter() {
-                const totalSupply = (
-                    await contract.current.totalSupply()
-                ).toString()
-                console.log(totalSupply)
-                setMintedCounter(totalSupply)
-            }
-            updateMintedCounter()
-            const transferEvent = contract.current.filters.Transfer()
-            contract.current.on(transferEvent, async () => {
-                updateMintedCounter()
-            })
-        }
-    })
+    function mint() {}
 
     return (
         <>
@@ -72,11 +44,11 @@ export default function Home() {
                             to get spots for others. LFG!
                         </h2>
                     </div>
-                    <Button
+                    <ConnectBtn
                         className='bg-rose px-20 h-16 font-VT323 text-white text-[1.7rem] mt-[7.8rem] hover:brightness-[1.3]'
-                        onClick={() => setIsWalletModalOpen(true)}>
-                        Connect Wallet
-                    </Button>
+                        onActiveClick={mint}
+                        activeText='Mint'
+                    />
                     <span className='text-center text-2xl font-VT323 text-text-light-gray mx-auto'>
                         minted 0/5000
                     </span>
@@ -120,10 +92,6 @@ export default function Home() {
                     </div>
                 </div>
             </main>
-            <ConnectWalletModal
-                isModalOpen={isWalletModalOpen}
-                setIsModalOpen={setIsWalletModalOpen}
-            />
         </>
     )
 }

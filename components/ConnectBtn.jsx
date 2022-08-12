@@ -1,39 +1,30 @@
-import { useEffect } from 'react'
-import { useWeb3React } from '@web3-react/core'
-import { connectors } from '../utils/connectors'
+import Button from './Button'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import Web3Modal from 'web3modal'
 
-export default function ConnectBtn({ setIsModalOpen, children }) {
-    const { deactivate, activate, active, ggg } = useWeb3React()
-
-    function resetState() {
-        window.localStorage.setItem('provider', undefined)
-    }
-
-    function disconnect() {
-        deactivate()
-        resetState()
-    }
-
-    useEffect(() => {
-        const provider = window.localStorage.getItem('provider')
-        if (provider) {
-           async () => await activate(connectors[provider])
+const providerOptions = {
+    walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+            rpc: { 5: process.env.GOERLI_RPC }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [active])
+    }
+}
+
+export default function ConnectBtn({ onActiveClick, activeText, className }) {
+    async function connect() {
+        const web3Modal = new Web3Modal({
+            cacheProvider: false,
+            providerOptions
+        })
+        const web3ModalProvider = await web3Modal.connect()
+    }
 
     return (
-        <button
-            className='bg-amber-400 rounded-full p-4 px-6 text-white text-lg font-bold'
-            onClick={async () => {
-                if (active) {
-                    disconnect()
-                } else {
-                    setIsModalOpen(true)
-                }
+        <Button
+            onClick={() => {
+                connect()
             }}
-        >
-            {children}
-        </button>
+            className={className}>Connect Wallet</Button>
     )
 }
