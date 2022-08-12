@@ -42,7 +42,6 @@ export default function Home() {
             <Head>
                 <title>Mint Hootis</title>
                 <meta name='description' content='Mint page of movebird' />
-                <link rel='icon' href='/favicon.ico' />
             </Head>
 
             <Header />
