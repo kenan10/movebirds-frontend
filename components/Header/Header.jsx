@@ -32,7 +32,9 @@ function Header() {
                         className='flex-grow'
                     />
                 </Button>
-                <Button className='text-rose px-9 py-2 h-full w-56 font-VT323 text-[1.5rem] leading-none sm:flex hidden bg-rose-medium'>
+                <Button
+                    className='text-rose px-9 py-2 h-full w-56 font-VT323 text-[1.5rem] leading-none sm:flex hidden bg-rose-medium'
+                    onClick={() => setIsWalletModalOpen(true)}>
                     Connect Wallet
                 </Button>
             </div>
