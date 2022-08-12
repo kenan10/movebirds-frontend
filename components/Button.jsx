@@ -1,7 +1,7 @@
 function Button({ children, onClick, className }) {
     return (
         <button
-            className={`rounded-lg bg-rose h-fit flex flex-row justify-center items-center ${className}`}
+            className={`rounded-lg flex flex-row justify-center items-center ${className}`}
             onClick={onClick}>
             {children}
         </button>

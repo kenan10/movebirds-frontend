@@ -13,18 +13,18 @@ function Header() {
                 </div>
             </div>
             <div className='flex flex-row items-center gap-5 h-12'>
-                <Button className='w-12 h-full'>
+                <Button className='w-12 h-full bg-rose-medium'>
                     <Image
-                        src='/../public/etherscan-logo.png'
+                        src='/etherscan-logo.png'
                         alt='etherscan'
                         layout='fixed'
                         height='20rem'
                         width='20rem'
                     />
                 </Button>
-                <Button className='w-12 h-full'>
+                <Button className='w-12 h-full bg-rose-medium'>
                     <Image
-                        src='/../public/twitter-logo.png'
+                        src='/twitter-logo.png'
                         alt='etherscan'
                         layout='fixed'
                         height='20rem'
@@ -32,7 +32,7 @@ function Header() {
                         className='flex-grow'
                     />
                 </Button>
-                <Button className='text-[#FD4E79] px-9 py-2 h-full w-56 font-VT323 text-[1.5rem] leading-none sm:flex hidden'>
+                <Button className='text-rose px-9 py-2 h-full w-56 font-VT323 text-[1.5rem] leading-none sm:flex hidden bg-rose-medium'>
                     Connect Wallet
                 </Button>
             </div>
