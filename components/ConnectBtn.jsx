@@ -1,30 +1,21 @@
 import Button from './Button'
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import Web3Modal from 'web3modal'
+import useWeb3 from '../hooks/useWeb3'
 
-const providerOptions = {
-    walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-            rpc: { 5: process.env.GOERLI_RPC }
-        }
-    }
-}
-
-export default function ConnectBtn({ onActiveClick, activeText, className }) {
-    async function connect() {
-        const web3Modal = new Web3Modal({
-            cacheProvider: false,
-            providerOptions
-        })
-        const web3ModalProvider = await web3Modal.connect()
-    }
-
+function ConnectBtn({ onActiveClick, activeText, className }) {
+    const { connect, active } = useWeb3()
     return (
         <Button
             onClick={() => {
-                connect()
+                if (active) {
+                    onActiveClick()
+                } else {
+                    connect()
+                }
             }}
-            className={className}>Connect Wallet</Button>
+            className={className}>
+            {active ? activeText : 'Connect Wallet'}
+        </Button>
     )
 }
+
+export default ConnectBtn

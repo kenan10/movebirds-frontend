@@ -1,11 +1,12 @@
 import '../styles/globals.css'
-
-function getLibrary(provider) {
-    return new Web3Provider(provider)
-}
+import { Web3Provider } from '../contexts/Web3/Web3Provider'
 
 function MyApp({ Component, pageProps }) {
-    return <Component {...pageProps} />
+    return (
+        <Web3Provider>
+            <Component {...pageProps} />
+        </Web3Provider>
+    )
 }
 
 export default MyApp
