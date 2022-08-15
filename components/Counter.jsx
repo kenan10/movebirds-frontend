@@ -14,7 +14,7 @@ function Counter({ quantity, setQuantity }) {
     return (
         <div className='flex flex-row justify-center gap-4 leading-none'>
             <button
-                className='font-VT323 text-[2.7rem] text-black hover:bg-text-light-gray rounded-full h-fit px-2'
+                className='font-VT323 text-[2.7rem] text-black hover:bg-rose-medium rounded-xl h-fit px-2'
                 onClick={decrease}>
                 -
             </button>
@@ -22,7 +22,7 @@ function Counter({ quantity, setQuantity }) {
                 {quantity}
             </span>
             <button
-                className='font-VT323 text-[2.7rem] text-black hover:bg-text-light-gray rounded-full h-fit px-2'
+                className='font-VT323 text-[2.7rem] text-black hover:bg-rose-medium rounded-xl h-fit px-2'
                 onClick={increase}>
                 +
             </button>

@@ -80,7 +80,7 @@ export default function Home() {
             <Header />
 
             <main className='bg-rose-light mx-auto p-4 flex flex-col items-center'>
-                <div className='flex flex-col items-center sm:mb-60 mb-16 w-full'>
+                <div className='flex flex-col items-center sm:mb-60 mb-16 mt-10 w-full'>
                     <Image
                         src='/avatar.gif'
                         alt='avatar'
