@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState } from 'react'
 
 const Web3Context = createContext()
 
@@ -6,6 +6,9 @@ function Web3Provider({ children }) {
     const [library, setLibrary] = useState()
     const [provider, setProvider] = useState()
     const [active, setActive] = useState(false)
+    const [accountAddress, setAccountAddress] = useState('')
+    const [chainId, setChainId] = useState('')
+    const [signer, setSigner] = useState()
 
     return (
         <Web3Context.Provider
@@ -15,7 +18,13 @@ function Web3Provider({ children }) {
                 provider: provider,
                 setProvider: setProvider,
                 active: active,
-                setActive: setActive
+                setActive: setActive,
+                accountAddress,
+                setAccountAddress,
+                chainId,
+                setChainId,
+                signer,
+                setSigner
             }}>
             {children}
         </Web3Context.Provider>

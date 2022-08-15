@@ -16,13 +16,31 @@ const providerOptions = {
 let web3Modal
 
 function useWeb3() {
-    const { provider, setProvider, library, setLibrary, active, setActive } =
-        useContext(Web3Context)
+    const {
+        provider,
+        setProvider,
+        library,
+        setLibrary,
+        active,
+        setActive,
+        accountAddress,
+        setAccountAddress,
+        chainId,
+        setChainId,
+        signer,
+        setSigner
+    } = useContext(Web3Context)
 
     async function connect() {
         const providerLocal = await web3Modal.connect()
         setProvider(providerLocal)
         const libraryLocal = new Web3Provider(providerLocal)
+        const accounts = await libraryLocal.listAccounts()
+        const network = await libraryLocal.getNetwork()
+        const signer = libraryLocal.getSigner()
+        setSigner(signer)
+        if (accounts) setAccountAddress(accounts[0])
+        setChainId(network.chainId)
         setLibrary(libraryLocal)
         setActive(true)
     }
@@ -30,6 +48,7 @@ function useWeb3() {
     function refreshState() {
         setProvider()
         setLibrary()
+        setAccountAddress('')
         setActive(false)
     }
 
@@ -58,10 +77,10 @@ function useWeb3() {
                 disconnect()
             }
             function handleAccountsChanged(accounts) {
-                console.log(accounts)
+                setAccountAddress(accounts[0])
             }
             function handleChainChanged(_hexChainId) {
-                console.log(_hexChainId)
+                setChainId(parseInt(_hexChainId, 16).toString())
             }
 
             provider.on('accountsChanged', handleAccountsChanged)
@@ -82,7 +101,16 @@ function useWeb3() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [provider])
 
-    return { connect, disconnect, library, provider, active }
+    return {
+        connect,
+        disconnect,
+        library,
+        provider,
+        active,
+        accountAddress,
+        chainId,
+        signer
+    }
 }
 
 export default useWeb3

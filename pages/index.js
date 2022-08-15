@@ -1,12 +1,42 @@
-import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
-import ConnectBtn from '../components/ConnectBtn'
+import Button from '../components/Button'
 import Header from '../components/Header'
 import FAQItem from '../components/FAQItem'
 import Image from 'next/image'
 import faqItems from '../assets/faqItems'
+import useWeb3 from '../hooks/useWeb3'
+import Counter from '../components/Counter'
+import { useState, useEffect } from 'react'
+import useContract from '../hooks/useContract'
+import { formatEther } from 'ethers/lib/utils'
 
 export default function Home() {
+    const { active, connect } = useWeb3()
+    const [quantity, setQuantity] = useState(1)
+    const contract = useContract()
+    const [price, setPrice] = useState('')
+    const [numberMinted, setNumberMinted] = useState(0)
+
+    useEffect(() => {
+        if (contract) {
+            if (contract.signer) {
+                async function updatePrice() {
+                    const price = await contract.tokenPrice()
+                    setPrice(formatEther(price.toString()))
+                }
+                updatePrice()
+                async function updateNumberMinted() {
+                    const numberMinted = await contract.totalSupply()
+                    setNumberMinted(numberMinted.toString())
+                }
+                updateNumberMinted()
+                contract.on('Transfer', () => {
+                    updateNumberMinted()
+                })
+            }
+        }
+    }, [contract])
+
     function mint() {}
 
     return (
@@ -44,14 +74,58 @@ export default function Home() {
                             to get spots for others. LFG!
                         </h2>
                     </div>
-                    <ConnectBtn
-                        className='bg-rose px-20 h-16 font-VT323 text-white text-[1.7rem] mt-[7.8rem] hover:brightness-[1.3]'
-                        onActiveClick={mint}
-                        activeText='Mint'
-                    />
-                    <span className='text-center text-2xl font-VT323 text-text-light-gray mx-auto'>
-                        minted 0/5000
-                    </span>
+                    <div
+                        className={`flex flex-col items-center w-[300px] ${
+                            active ? 'mt-9' : 'mt-[7.8rem]'
+                        }`}>
+                        {active ? (
+                            <div className='flex flex-col items-center w-full mb-8'>
+                                <span className='font-VT323 text-2xl text-faq-text w-full text-center'>
+                                    quantity
+                                </span>
+                                <Counter
+                                    quantity={quantity}
+                                    setQuantity={setQuantity}
+                                />
+                            </div>
+                        ) : (
+                            ''
+                        )}
+
+                        <Button
+                            className='bg-rose w-full h-16 font-VT323 text-white text-[1.7rem] hover:brightness-[1.3]'
+                            onClick={() => {
+                                if (active) {
+                                    mint()
+                                } else {
+                                    connect()
+                                }
+                            }}>
+                            {active ? 'Mint' : 'Connect Wallet'}
+                        </Button>
+                        {active ? (
+                            <div className='flex flex-row justify-between w-full leading-none'>
+                                <div className='flex flex-col items-start'>
+                                    <div className='text-start text-2xl font-VT323 text-text-light-gray'>
+                                        minted
+                                    </div>
+                                    <div className='text-start text-3xl font-VT323 text-text-light-gray'>
+                                        {numberMinted}/5000
+                                    </div>
+                                </div>
+                                <div className='flex flex-col items-end'>
+                                    <div className='text-end text-2xl font-VT323 text-text-light-gray'>
+                                        price
+                                    </div>
+                                    <div className='text-end text-3xl font-VT323 text-text-light-gray'>
+                                        {price.toString()} ETH
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            ''
+                        )}
+                    </div>
                 </div>
                 <div className='flex flex-col items-center max-w-[60rem] w-full'>
                     <h1 className='uppercase font-Upheaval text-[5.8rem] sm:mb-[4.3rem] -mb-10 text-center text-text-gray opacity-20'>

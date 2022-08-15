@@ -1,10 +1,9 @@
 import Image from 'next/image'
 import useWeb3 from '../../hooks/useWeb3'
 import Button from '../Button'
-import ConnectBtn from '../ConnectBtn'
 
 function Header() {
-    const {disconnect} = useWeb3()
+    const { connect, disconnect, active, accountAddress } = useWeb3()
     return (
         <header className='w-full xl:px-16 lg:px-12 md:px-9 sm:px-7 px-6 py-2 flex flex-row justify-between items-center bg-white'>
             <div className='flex flex-col h-fit'>
@@ -35,10 +34,22 @@ function Header() {
                         className='flex-grow'
                     />
                 </Button>
-                <ConnectBtn
-                    className='text-rose px-9 py-2 h-full w-56 font-VT323 text-[1.5rem] leading-none sm:flex hidden bg-rose-medium'
-                    activeText='Disconnect'
-                    onActiveClick={() => disconnect()} />
+                <Button
+                    className='text-rose py-2 h-full w-56 font-VT323 text-[1.5rem] leading-none sm:flex hidden bg-rose-medium'
+                    onClick={() => {
+                        if (active) {
+                            disconnect()
+                        } else {
+                            connect()
+                        }
+                    }}>
+                    {active
+                        ? `${accountAddress.slice(
+                              0,
+                              5
+                          )}......${accountAddress.slice(-4)}`
+                        : 'Connect Wallet'}
+                </Button>
             </div>
         </header>
     )
