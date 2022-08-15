@@ -9,13 +9,21 @@ import Counter from '../components/Counter'
 import { useState, useEffect } from 'react'
 import useContract from '../hooks/useContract'
 import { formatEther } from 'ethers/lib/utils'
+import stage from '../public/stage.json'
+import axios from 'axios'
 
 export default function Home() {
-    const { active, connect } = useWeb3()
+    const { active, connect, accountAddress } = useWeb3()
     const [quantity, setQuantity] = useState(1)
     const contract = useContract()
     const [price, setPrice] = useState('')
     const [numberMinted, setNumberMinted] = useState(0)
+    const [isAllowedToMint, setIsAllowedToMint] = useState(false)
+
+    const client = axios.create({
+        baseURL: 'http://localhost:80',
+        headers: { 'Access-Control-Allow-Origin': '*' }
+    })
 
     useEffect(() => {
         if (contract) {
@@ -36,6 +44,29 @@ export default function Home() {
             }
         }
     }, [contract])
+
+    useEffect(() => {
+        if (accountAddress && contract) {
+            async function updateIsAllowedToMint() {
+                const salesStageNumber = (await contract.saleStage()).toString()
+                const list_name = stage.salesStages[salesStageNumber]?.listName
+                if (list_name) {
+                    const res = client.get('/lists/list_items', {
+                        params: {
+                            collection_name: stage.collectionName,
+                            list_name:
+                                stage.salesStages[salesStageNumber.toString()]
+                                    .listName,
+                            address: accountAddress
+                        }
+                    })
+                    console.log(res)
+                }
+            }
+            updateIsAllowedToMint()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountAddress, contract])
 
     function mint() {}
 

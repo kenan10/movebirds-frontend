@@ -1,3 +1,11 @@
 {
-    "currentSalesStage": "public"
+    "collectionName": "movebirds",
+    "salesStages": {
+        "1": {
+            "listName": "allowlist"
+        },
+        "2": {
+            "listName": "waitlist"
+        }
+    }
 }
