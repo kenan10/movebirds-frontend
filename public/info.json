@@ -4,13 +4,13 @@
         {
             "code": "1",
             "startsAt": "2022-08-23T15:00:00.000Z",
-            "listName": "allowlist",
+            "listName": "allowlist_movebirds",
             "displayListName": "Allowlist"
         },
         {
             "code": "2",
             "startsAt": "2022-08-23T17:00:00.000Z",
-            "listName": "waitlist",
+            "listName": "waitlist_movebirds",
             "displayListName": "Waitlist"
         }
     ]

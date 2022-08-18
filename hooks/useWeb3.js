@@ -50,10 +50,10 @@ function useWeb3() {
     }
 
     function refreshState() {
+        setActive(false)
         setProvider()
         setLibrary()
-        setAccountAddress('')
-        setActive(false)
+        setAccountAddress()
     }
 
     async function disconnect() {
@@ -70,7 +70,7 @@ function useWeb3() {
 
     useEffect(() => {
         if (web3Modal.cachedProvider) {
-            connectWallet()
+            connect()
         }
     })
 
@@ -81,15 +81,20 @@ function useWeb3() {
                 disconnect()
             }
             function handleAccountsChanged(accounts) {
-                setAccountAddress(accounts[0])
+                if (accounts.length !== 0) {
+                    console.log('accountsChanged', accounts)
+                    setAccountAddress(accounts[0])
+                } else {
+                    disconnect()
+                }
             }
             function handleChainChanged(_hexChainId) {
                 setChainId(parseInt(_hexChainId, 16).toString())
             }
 
+            provider.on('disconnect', handleDisconnect)
             provider.on('accountsChanged', handleAccountsChanged)
             provider.on('chainChanged', handleChainChanged)
-            provider.on('disconnect', handleDisconnect)
 
             return () => {
                 if (provider.removeListener) {
