@@ -2,7 +2,7 @@ import Button from './Button'
 import Counter from './Counter'
 import { useState, useEffect } from 'react'
 import useContract from '../hooks/useContract'
-import { formatEther, hexlify, parseEther } from 'ethers/lib/utils'
+import { formatEther, parseEther } from 'ethers/lib/utils'
 import useWeb3 from '../hooks/useWeb3'
 
 import info from '../public/info.json'
@@ -71,7 +71,10 @@ function MintBlock() {
                         setNearestSatgeAllowed({})
                     }
                     let updateValue
-                    if (allowedLists?.length === 0 || typeof allowedLists === undefined) {
+                    if (
+                        allowedLists?.length === 0 ||
+                        typeof allowedLists === undefined
+                    ) {
                         updateValue = {}
                     } else {
                         info.salesStages.sort((a, b) => {
@@ -114,16 +117,16 @@ function MintBlock() {
         // await contract.mintDev(5)
         const overrides = {
             value: parseEther((price * quantity).toString()),
-            gasLimit: 3e7
+            gasLimit: parseInt(3e7 / 2)
         }
         switch (currentStage) {
-            case "1":
+            case '1':
                 await contract.mintAllowlist(quantity, signature, overrides)
-                break;
-            case "2":
+                break
+            case '2':
                 await contract.mintWaitlist(quantity, signature, overrides)
             default:
-                break;
+                break
         }
     }
 
