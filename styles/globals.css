@@ -11,3 +11,7 @@
     font-family: 'VT323';
     src: url('../assets/VT323/VT323-Regular.ttf');
 }
+
+.text-secondary {
+    @apply font-VT323 text-text-light-gray;
+}

@@ -1,0 +1,17 @@
+{
+    "collectionName": "movebirds",
+    "salesStages": [
+        {
+            "code": "1",
+            "startsAt": "2022-08-23T15:00:00.000Z",
+            "listName": "allowlist",
+            "displayListName": "Allowlist"
+        },
+        {
+            "code": "2",
+            "startsAt": "2022-08-23T17:00:00.000Z",
+            "listName": "waitlist",
+            "displayListName": "Waitlist"
+        }
+    ]
+}

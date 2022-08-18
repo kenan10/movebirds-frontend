@@ -15,7 +15,20 @@ function Header() {
                 </div>
             </div>
             <div className='flex flex-row items-center gap-5 h-12'>
-                <Button className='w-12 h-full bg-rose-medium'>
+                <Button
+                    className='w-12 h-full bg-rose-medium'
+                    href='https://opensea.io/'>
+                    <Image
+                        src='/os-logo.png'
+                        alt='opensea'
+                        layout='fixed'
+                        height='23rem'
+                        width='23rem'
+                    />
+                </Button>
+                <Button
+                    className='w-12 h-full bg-rose-medium'
+                    href='https://etherscan.io/'>
                     <Image
                         src='/etherscan-logo.png'
                         alt='etherscan'
@@ -24,10 +37,12 @@ function Header() {
                         width='20rem'
                     />
                 </Button>
-                <Button className='w-12 h-full bg-rose-medium'>
+                <Button
+                    className='w-12 h-full bg-rose-medium'
+                    href='https://twitter.com/home'>
                     <Image
                         src='/twitter-logo.png'
-                        alt='etherscan'
+                        alt='twitter'
                         layout='fixed'
                         height='20rem'
                         width='24rem'

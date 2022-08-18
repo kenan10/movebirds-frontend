@@ -17,14 +17,17 @@ function useContract() {
                 signer
             )
             setContract(contract)
-        } /* else {
+        } else {
             const contract = new ethers.Contract(
                 addresses[DEFAULT_CHAIN_ID][0],
                 abi,
-                ethers.getDefaultProvider()
+                new ethers.providers.AlchemyProvider(
+                    'goerli',
+                    process.env.GOERLI_RPC
+                )
             )
             setContract(contract)
-        } */
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chainId, accountAddress])
 
