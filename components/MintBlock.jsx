@@ -171,7 +171,7 @@ function MintBlock() {
                                 </div>
 
                                 <Button
-                                    className='bg-rose w-full h-16 font-VT323 text-white text-[1.7rem] hover:brightness-[1.3] disabled:bg-gray-500 disabled:hover:bg-gray-500'
+                                    className='bg-rose w-full h-16 font-VT323 text-white text-[1.7rem] hover:brightness-[1.3] disabled:bg-gray-500 disabled:hover:brightness-100'
                                     disabled={
                                         nearestSatgeAllowed.code !==
                                         currentStage
