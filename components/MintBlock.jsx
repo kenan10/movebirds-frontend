@@ -20,6 +20,24 @@ const client = axios.create({
     headers: { 'Access-Control-Allow-Origin': '*' }
 })
 
+async function fetchAddressLists(address) {
+    try {
+        const response = await client.get('/lists/list_items', {
+            params: {
+                collection_name: info.collectionName,
+                address: address
+            }
+        })
+        return response
+    } catch (error) {
+        console.log('Lists fetch with following error ', error)
+    }
+}
+
+function padTo2Digits(num) {
+    return String(num).padStart(2, '0')
+}
+
 function MintBlock() {
     const { active, connect, disconnect, accountAddress } = useWeb3()
     const [quantity, setQuantity] = useState(1)
@@ -54,57 +72,36 @@ function MintBlock() {
             async function updateNearestSatgeAllowed() {
                 const salesStageNumber = (await contract.saleStage()).toString()
                 setCurrentStage(salesStageNumber)
-                const list_name = info.salesStages.find(
-                    (stage) => stage.code === salesStageNumber
+                const { data: allowedLists } = await fetchAddressLists(
+                    accountAddress
                 )
-                if (list_name) {
-                    let allowedLists
-                    try {
-                        const { data } = await client.get('/lists/list_items', {
-                            params: {
-                                collection_name: info.collectionName,
-                                address: accountAddress
-                            }
-                        })
-                        allowedLists = data
-                    } catch (e) {
-                        setNearestSatgeAllowed({})
-                    }
-                    let updateValue
-                    if (
-                        allowedLists?.length === 0 ||
-                        typeof allowedLists === undefined
-                    ) {
-                        updateValue = {}
-                    } else {
-                        info.salesStages.sort((a, b) => {
-                            return (
-                                Date.parse(a.startsAt) - Date.parse(b.startsAt)
-                            )
-                        })
-                        findNearestAllowedStage: {
-                            for (let i = 0; i < info.salesStages.length; i++) {
-                                const stage = info.salesStages[i]
-                                for (let j = 0; j < allowedLists.length; j++) {
-                                    const allowedList = allowedLists[i]
-                                    if (
-                                        stage.listName === allowedList.listName
-                                    ) {
-                                        const signedAddress =
-                                            allowedList.signedAddress
+                const allowedStages = info.salesStages.filter((stage) =>
+                    allowedLists.find((allowedList) => {
+                        return allowedList.listName === stage.listName
+                    })
+                )
 
-                                        updateValue = {
-                                            ...stage,
-                                            signedAddress: signedAddress
-                                        }
-                                        break findNearestAllowedStage
-                                    }
-                                }
-                            }
+                let updateValue
+                if (
+                    Array.isArray(allowedStages) &&
+                    allowedStages.length !== 0
+                ) {
+                    const nearestSatgeAllowed = allowedStages.reduce(
+                        (prev, curr) => {
+                            return prev.startsAt < curr.startsAt ? prev : curr
                         }
+                    )
+                    updateValue = {
+                        ...nearestSatgeAllowed,
+                        signedAddress: allowedLists.find((allowedList) => {
+                            return (
+                                allowedList.listName ===
+                                nearestSatgeAllowed.listName
+                            )
+                        }).signedAddress
                     }
-                    setNearestSatgeAllowed(updateValue)
                 }
+                setNearestSatgeAllowed({ ...updateValue })
             }
             updateNearestSatgeAllowed()
         }
@@ -134,7 +131,8 @@ function MintBlock() {
         <>
             {active ? (
                 <>
-                    {Object.keys(nearestSatgeAllowed).length !== 0 ? (
+                    {nearestSatgeAllowed instanceof Object &&
+                    Object.keys(nearestSatgeAllowed).length !== 0 ? (
                         <>
                             <p
                                 className={`text-secondary text-2xl text-center max-w-lg ${
@@ -143,9 +141,17 @@ function MintBlock() {
                                         : ''
                                 }`}>
                                 {nearestSatgeAllowed.code !== currentStage
-                                    ? `We found your wallet in our ${nearestSatgeAllowed.displayListName}!
+                                    ? `We found your wallet in our ${
+                                          nearestSatgeAllowed.displayListName
+                                      }!
                         Please, wait until this mint phase
-                        starts at 0:00:00 UTC`
+                        starts at ${padTo2Digits(
+                            new Date(nearestSatgeAllowed.startsAt).getUTCHours()
+                        )}:${padTo2Digits(
+                                          new Date(
+                                              nearestSatgeAllowed.startsAt
+                                          ).getMinutes()
+                                      )}`
                                     : ''}
                             </p>
                             <div
