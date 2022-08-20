@@ -4,12 +4,12 @@
 
 @font-face {
     font-family: 'Upheaval';
-    src: url('../assets/Upheaval/upheavtt.ttf');
+    src: url('../public/upheavtt.ttf');
 }
 
 @font-face {
     font-family: 'VT323';
-    src: url('../assets/VT323/VT323-Regular.ttf');
+    src: url('../public/VT323-Regular.ttf');
 }
 
 .text-secondary {
