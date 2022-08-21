@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import FAQItem from '../components/FAQItem'
 import Image from 'next/image'
-import faqItems from '../assets/faqItems'
+import faqItems from '../public/faqItems'
 import MintBlock from '../components/MintBlock'
 
 export default function Home() {
