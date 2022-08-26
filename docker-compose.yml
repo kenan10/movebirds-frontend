@@ -5,5 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - BACKEND_ADDRESS=${BACKEND_ADDRESS}
     ports:
       - 3000:3000
