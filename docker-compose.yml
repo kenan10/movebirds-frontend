@@ -6,6 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - BACKEND_ADDRESS=${BACKEND_ADDRESS}
+      - NEXT_PUBLIC_BACKEND_ADDRESS=${NEXT_PUBLIC_BACKEND_ADDRESS}
     ports:
       - 3000:3000
