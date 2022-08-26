@@ -16,7 +16,7 @@ Object.keys(info.salesStages).forEach((key) => {
 })
 
 const client = axios.create({
-    baseURL: process.env.BACKEND_ADDRESS,
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_ADDRESS,
     headers: { 'Access-Control-Allow-Origin': '*' }
 })
 
