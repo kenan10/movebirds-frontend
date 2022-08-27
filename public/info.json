@@ -3,13 +3,13 @@
     "salesStages": [
         {
             "code": "1",
-            "startsAt": "2022-08-25T15:00:00.000Z",
+            "startsAt": "2022-10-25T15:00:00.000Z",
             "listName": "allowlist_movebirds",
             "displayListName": "Allowlist"
         },
         {
             "code": "2",
-            "startsAt": "2022-08-25T17:00:00.000Z",
+            "startsAt": "2022-10-25T17:00:00.000Z",
             "listName": "waitlist_movebirds",
             "displayListName": "Waitlist"
         }

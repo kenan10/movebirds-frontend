@@ -16,7 +16,7 @@ Object.keys(info.salesStages).forEach((key) => {
 })
 
 const client = axios.create({
-    baseURL: process.env.BACKEND_ADDRESS,
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_ADDRESS,
     headers: { 'Access-Control-Allow-Origin': '*' }
 })
 
@@ -110,8 +110,6 @@ function MintBlock() {
 
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
-        console.log(signature)
-        // await contract.mintDev(5)
         const overrides = {
             value: parseEther((price * quantity).toString()),
             gasLimit: parseInt(3e7 / 2)
