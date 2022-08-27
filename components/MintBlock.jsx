@@ -16,7 +16,7 @@ Object.keys(info.salesStages).forEach((key) => {
 })
 
 const client = axios.create({
-    baseURL: process.env.BACKEND_ADDRESS,
+    baseURL: 'http://192.168.0.241:80',
     headers: { 'Access-Control-Allow-Origin': '*' }
 })
 
