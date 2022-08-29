@@ -20,8 +20,7 @@ function isObject(obj) {
 }
 
 const client = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BACKEND_ADDRESS,
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_ADDRESS
 })
 
 async function fetchAddressLists(address) {
