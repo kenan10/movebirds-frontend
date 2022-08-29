@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 const DEFAULT_CHAIN_ID = 5
 
 function useContract() {
-    const { chainId, accountAddress, library, active, signer } = useWeb3()
+    const { chainId, accountAddress, active, signer } = useWeb3()
     const [contract, setContract] = useState()
 
     useEffect(() => {
@@ -18,13 +18,14 @@ function useContract() {
             )
             setContract(contract)
         } else {
+            const alchemyProvider = new ethers.providers.AlchemyProvider(
+                'goerli',
+                process.env.NEXT_PUBLIC_GOERLI_COUNTER_PRICE_API_KEY
+            )
             const contract = new ethers.Contract(
                 addresses[DEFAULT_CHAIN_ID][0],
                 abi,
-                new ethers.providers.AlchemyProvider(
-                    'goerli',
-                    process.env.GOERLI_RPC
-                )
+                alchemyProvider
             )
             setContract(contract)
         }

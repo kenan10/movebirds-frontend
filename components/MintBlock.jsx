@@ -15,6 +15,10 @@ Object.keys(info.salesStages).forEach((key) => {
     })
 })
 
+function isObject(obj) {
+    return obj instanceof Object && Object.keys(obj).length !== 0
+}
+
 const client = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_ADDRESS,
     headers: { 'Access-Control-Allow-Origin': '*' }
@@ -30,7 +34,7 @@ async function fetchAddressLists(address) {
         })
         return response
     } catch (error) {
-        console.log('Lists fetch with following error ', error)
+        console.log('Failed to read lists')
     }
 }
 
@@ -57,13 +61,13 @@ function MintBlock() {
                 updatePrice()
             }
             async function updateNumberMinted() {
-                const numberMinted = await contract.totalSupply()
-                setNumberMinted(numberMinted.toString())
+                if (isObject(contract)) {
+                    const numberMinted = await contract.totalSupply()
+                    setNumberMinted(numberMinted.toString())
+                }
             }
             updateNumberMinted()
-            contract.on('Transfer', () => {
-                updateNumberMinted()
-            })
+            setInterval(updateNumberMinted, 60 * 1000)
         }
     }, [contract])
 
@@ -129,8 +133,7 @@ function MintBlock() {
         <>
             {active ? (
                 <>
-                    {nearestSatgeAllowed instanceof Object &&
-                    Object.keys(nearestSatgeAllowed).length !== 0 ? (
+                    {isObject(nearestSatgeAllowed) ? (
                         <>
                             <p
                                 className={`text-secondary text-2xl text-center max-w-lg ${

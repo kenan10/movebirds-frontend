@@ -8,7 +8,7 @@ const providerOptions = {
     walletconnect: {
         package: WalletConnectProvider,
         options: {
-            rpc: { 5: process.env.GOERLI_RPC }
+            rpc: { 5: process.env.NEXT_PUBLIC_GOERLI_MINT_CONNECT_RPC }
         }
     }
 }
@@ -77,12 +77,10 @@ function useWeb3() {
     useEffect(() => {
         if (provider?.on) {
             function handleDisconnect() {
-                console.log('disconnect')
                 disconnect()
             }
             function handleAccountsChanged(accounts) {
                 if (accounts.length !== 0) {
-                    console.log('accountsChanged', accounts)
                     setAccountAddress(accounts[0])
                 } else {
                     disconnect()
