@@ -69,7 +69,7 @@ function MintBlock() {
             async function updateNumberMinted() {
                 if (isObject(contract)) {
                     const numberMinted = await fetchNumberMinted()
-                    setNumberMinted(numberMinted.toString())
+                    setNumberMinted(numberMinted?.value.toString())
                 }
             }
             updateNumberMinted()
