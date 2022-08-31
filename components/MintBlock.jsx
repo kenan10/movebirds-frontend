@@ -37,6 +37,13 @@ async function fetchAddressLists(address) {
     }
 }
 
+async function fetchNumberMinted() {
+    try {
+        const response = await client.get('/blockchain/number_minted')
+        return response
+    } catch (error) {}
+}
+
 function padTo2Digits(num) {
     return String(num).padStart(2, '0')
 }
@@ -61,12 +68,12 @@ function MintBlock() {
             }
             async function updateNumberMinted() {
                 if (isObject(contract)) {
-                    const numberMinted = await contract.totalSupply()
+                    const numberMinted = await fetchNumberMinted()
                     setNumberMinted(numberMinted.toString())
                 }
             }
             updateNumberMinted()
-            setInterval(updateNumberMinted, 60 * 1000)
+            setInterval(updateNumberMinted, 60 * 1000 * 2)
         }
     }, [contract])
 
