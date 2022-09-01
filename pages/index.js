@@ -10,7 +10,7 @@ export default function Home() {
         <>
             <Head>
                 <title>Mint Hootis</title>
-                <link rel="shortcut icon" href="/favicon.ico" />
+                <link rel='shortcut icon' href='/favicon.ico' />
                 <meta name='description' content='Mint page of movebird' />
             </Head>
 
