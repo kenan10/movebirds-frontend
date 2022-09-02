@@ -9,37 +9,37 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>The Hootis</title>
+                <title>Mint Hootis</title>
                 <link rel='shortcut icon' href='/favicon.ico' />
                 <meta name='description' content='Mint page of movebird' />
             </Head>
 
             <Header />
 
-            <main className='bg-rose-light mx-auto p-4 flex flex-col items-center'>
+            <main className='bg-rose-light mx-auto p-4 flex flex-col items-center pb-24'>
                 <div className='flex flex-col items-center sm:mb-60 mb-16 mt-10 w-full'>
                     <Image
                         src='/avatar.gif'
                         alt='avatar'
                         layout='fixed'
-                        width='298px'
-                        height='273px'
+                        width='300px'
+                        height='300px'
                     />
                     <div className='mt-1'>
                         <h1 className='uppercase font-Upheaval text-[4rem] text-title text-center sm:leading-none leading-extra-loose'>
                             mint by WL`s only
                         </h1>
                         <h2 className='max-w-[40rem] text-center text-xl text-secondary mx-auto mt-4'>
-                            No public mint. No gas wars. Check our optimized
+                            No public mint. No gas wars. Check our optimized{' '}
                             <a href='https://etherscan.io/address/0xf43E7f67b2d419e09882A2e16cEB5f2D129D4E11'>
                                 <span className='text-title'>
                                     {' '}
                                     contract here
                                 </span>
                             </a>
-                            . This collection is our first from many next in
-                            Season 1. By owning this OG — you have best chances
-                            to get spots for others. LFG!
+                            . This animated collection — is first from many
+                            next. By owning this OG you have best chances to get
+                            spots for others. Details soon.
                         </h2>
                     </div>
                     <MintBlock />
