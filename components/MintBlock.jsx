@@ -68,9 +68,13 @@ function MintBlock() {
             }
             async function updateNumberMinted() {
                 if (isObject(contract)) {
-                    const { data: numberMinted } = await fetchNumberMinted()
-                    console.log(numberMinted);
-                    setNumberMinted(numberMinted?.value.toString())
+                    const { data: numberMinted } =
+                        (await fetchNumberMinted()) || {}
+                    if (typeof numberMinted != 'undefined') {
+                        setNumberMinted(numberMinted?.value.toString())
+                    } else {
+                        setNumberMinted(0)
+                    }
                 }
             }
             updateNumberMinted()
@@ -83,36 +87,39 @@ function MintBlock() {
             async function updateNearestSatgeAllowed() {
                 const salesStageNumber = (await contract.saleStage()).toString()
                 setCurrentStage(salesStageNumber)
-                const { data: allowedLists } = await fetchAddressLists(
-                    accountAddress
-                )
-                const allowedStages = info.salesStages.filter((stage) =>
-                    allowedLists.find((allowedList) => {
-                        return allowedList.listName === stage.listName
-                    })
-                )
-
-                let updateValue
-                if (
-                    Array.isArray(allowedStages) &&
-                    allowedStages.length !== 0
-                ) {
-                    const nearestSatgeAllowed = allowedStages.reduce(
-                        (prev, curr) => {
-                            return prev.startsAt < curr.startsAt ? prev : curr
-                        }
+                const { data: allowedLists } =
+                    (await fetchAddressLists(accountAddress)) || []
+                if (typeof allowedLists != 'undefined') {
+                    const allowedStages = info.salesStages.filter((stage) =>
+                        allowedLists.find((allowedList) => {
+                            return allowedList.listName === stage.listName
+                        })
                     )
-                    updateValue = {
-                        ...nearestSatgeAllowed,
-                        signedAddress: allowedLists.find((allowedList) => {
-                            return (
-                                allowedList.listName ===
-                                nearestSatgeAllowed.listName
-                            )
-                        }).signedAddress
+
+                    let updateValue
+                    if (
+                        Array.isArray(allowedStages) &&
+                        allowedStages.length !== 0
+                    ) {
+                        const nearestSatgeAllowed = allowedStages.reduce(
+                            (prev, curr) => {
+                                return prev.startsAt < curr.startsAt
+                                    ? prev
+                                    : curr
+                            }
+                        )
+                        updateValue = {
+                            ...nearestSatgeAllowed,
+                            signedAddress: allowedLists.find((allowedList) => {
+                                return (
+                                    allowedList.listName ===
+                                    nearestSatgeAllowed.listName
+                                )
+                            }).signedAddress
+                        }
                     }
+                    setNearestSatgeAllowed({ ...updateValue })
                 }
-                setNearestSatgeAllowed({ ...updateValue })
             }
             updateNearestSatgeAllowed()
         }

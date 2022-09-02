@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Mint Hootis</title>
+                <title>The Hootis</title>
                 <link rel='shortcut icon' href='/favicon.ico' />
                 <meta name='description' content='Mint page of movebird' />
             </Head>
@@ -31,7 +31,7 @@ export default function Home() {
                         </h1>
                         <h2 className='max-w-[40rem] text-center text-xl text-secondary mx-auto mt-4'>
                             No public mint. No gas wars. Check our optimized
-                            <a href='https://etherscan.io/'>
+                            <a href='https://etherscan.io/address/0xf43E7f67b2d419e09882A2e16cEB5f2D129D4E11'>
                                 <span className='text-title'>
                                     {' '}
                                     contract here

@@ -17,7 +17,7 @@ function Header() {
             <div className='flex flex-row items-center gap-5 h-12'>
                 <Button
                     className='w-12 h-full bg-rose-medium'
-                    href='https://opensea.io/'>
+                    href='https://opensea.io/collection/hootis'>
                     <Image
                         src='/os-logo.png'
                         alt='opensea'
@@ -28,7 +28,7 @@ function Header() {
                 </Button>
                 <Button
                     className='w-12 h-full bg-rose-medium'
-                    href='https://etherscan.io/'>
+                    href='https://etherscan.io/address/0xf43E7f67b2d419e09882A2e16cEB5f2D129D4E11'>
                     <Image
                         src='/etherscan-logo.png'
                         alt='etherscan'
@@ -39,7 +39,7 @@ function Header() {
                 </Button>
                 <Button
                     className='w-12 h-full bg-rose-medium'
-                    href='https://twitter.com/home'>
+                    href='https://twitter.com/thehootis'>
                     <Image
                         src='/twitter-logo.png'
                         alt='twitter'
