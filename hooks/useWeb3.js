@@ -8,7 +8,7 @@ const providerOptions = {
     walletconnect: {
         package: WalletConnectProvider,
         options: {
-            rpc: { 5: process.env.NEXT_PUBLIC_GOERLI_MINT_CONNECT_RPC }
+            rpc: { 1: process.env.NEXT_PUBLIC_MINT_CONNECT_RPC }
         }
     }
 }
@@ -38,12 +38,17 @@ function useWeb3() {
             const libraryLocal = new Web3Provider(providerLocal)
             const accounts = await libraryLocal.listAccounts()
             const network = await libraryLocal.getNetwork()
-            const signer = libraryLocal.getSigner()
-            setSigner(signer)
-            if (accounts) setAccountAddress(accounts[0])
-            setChainId(network.chainId)
-            setLibrary(libraryLocal)
-            setActive(true)
+            if (network.chainId != "1") {
+                await disconnect()
+                console.log("Use only mainnet")
+            } else {
+                const signer = libraryLocal.getSigner()
+                setSigner(signer)
+                if (accounts) setAccountAddress(accounts[0])
+                setChainId(network.chainId)
+                setLibrary(libraryLocal)
+                setActive(true)
+            }
         } catch (error) {
             console.log('Failed to connect')
         }
