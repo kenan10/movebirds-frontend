@@ -1,15 +1,15 @@
 {
-    "collectionName": "movebirds",
+    "collectionName": "hootis_test",
     "salesStages": [
         {
             "code": "1",
-            "startsAt": "2022-09-29T11:10:00.000Z",
-            "listName": "hootis_allowlist",
+            "startsAt": "2022-08-29T11:10:00.000Z",
+            "listName": "allowlist_hootis_test",
             "displayListName": "Allowlist"
         },
         {
             "code": "2",
-            "startsAt": "2022-09-29T13:00:00.000Z",
+            "startsAt": "2022-08-29T13:00:00.000Z",
             "listName": "hootis_waitlist",
             "displayListName": "Waitlist"
         }
