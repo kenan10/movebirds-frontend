@@ -7,9 +7,9 @@ const faqItems = [
     {
         text: `September 29: 
         11:00 EDT Allowlist: First FREE, second — 0.005 ETH.
-        13:00 EDT Waitlist: 0.005 ETH per nft.
-        13:30 EDT Waitlist: 0.003 ETH per nft.
-        14:00 EDT Waitlist: First FREE, second — 0.005 ETH.
+        12:00 EDT Waitlist: 0.005 ETH per nft.
+        12:30 EDT Waitlist: 0.003 ETH per nft.
+        13:00 EDT Waitlist: First FREE, second — 0.005 ETH.
         When reveal? 20 min after sold out.`,
         title: 'Ok, what mint schedule will be?',
         number: '02'
