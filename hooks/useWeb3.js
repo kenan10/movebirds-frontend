@@ -8,7 +8,7 @@ const providerOptions = {
     walletconnect: {
         package: WalletConnectProvider,
         options: {
-            rpc: { 1: process.env.NEXT_PUBLIC_MAINNET_MINT_CONNECT_RPC }
+            rpc: { 1: process.env.NEXT_PUBLIC_MINT_CONNECT_RPC }
         }
     }
 }
