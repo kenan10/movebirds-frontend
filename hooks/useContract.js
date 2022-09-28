@@ -3,8 +3,7 @@ import { abi } from '../constants'
 import useWeb3 from './useWeb3'
 import { useEffect, useState } from 'react'
 
-const DEFAULT_CHAIN_ID = 1
-const NET_NAME = ''
+let NET_NAME = ''
 if (process.env.NEXT_PUBLIC_COUNTER_PRICE_API_KEY.includes('eth-mainnet')) {
     NET_NAME = 'mainnet'
 } else {

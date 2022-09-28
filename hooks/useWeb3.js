@@ -4,11 +4,18 @@ import Web3Modal from 'web3modal'
 import { Web3Provider } from '@ethersproject/providers'
 import { Web3Context } from '../contexts/Web3/Web3Provider'
 
+let TARGET_CHAIN_ID = ''
+if (process.env.NEXT_PUBLIC_COUNTER_PRICE_API_KEY.includes('eth-mainnet')) {
+    TARGET_CHAIN_ID = '1'
+} else {
+    TARGET_CHAIN_ID = '5'
+}
+
 const providerOptions = {
     walletconnect: {
         package: WalletConnectProvider,
         options: {
-            rpc: { 1: process.env.NEXT_PUBLIC_MINT_CONNECT_RPC }
+            rpc: { [TARGET_CHAIN_ID]: process.env.NEXT_PUBLIC_MINT_CONNECT_RPC }
         }
     }
 }
@@ -38,7 +45,7 @@ function useWeb3() {
             const libraryLocal = new Web3Provider(providerLocal)
             const accounts = await libraryLocal.listAccounts()
             const network = await libraryLocal.getNetwork()
-            if (network.chainId != "1") {
+            if (network.chainId != TARGET_CHAIN_ID) {
                 await disconnect()
                 console.log("Use only mainnet")
             } else {
