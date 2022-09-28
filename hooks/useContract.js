@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { addresses, abi } from '../constants'
+import { abi } from '../constants'
 import useWeb3 from './useWeb3'
 import { useEffect, useState } from 'react'
 
@@ -12,13 +12,13 @@ if (process.env.NEXT_PUBLIC_COUNTER_PRICE_API_KEY.includes('eth-mainnet')) {
 }
 
 function useContract() {
-    const { chainId, accountAddress, active, signer } = useWeb3()
+    const { accountAddress, active, signer } = useWeb3()
     const [contract, setContract] = useState()
 
     useEffect(() => {
         if (active) {
             const contract = new ethers.Contract(
-                addresses[chainId][0],
+                process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
                 abi,
                 signer
             )
@@ -29,14 +29,14 @@ function useContract() {
                 process.env.NEXT_PUBLIC_COUNTER_PRICE_API_KEY
             )
             const contract = new ethers.Contract(
-                addresses[DEFAULT_CHAIN_ID][0],
+                process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
                 abi,
                 alchemyProvider
             )
             setContract(contract)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chainId, accountAddress])
+    }, [accountAddress])
 
     return contract
 }
