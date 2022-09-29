@@ -144,6 +144,7 @@ function MintBlock() {
                 const currentlyMinted = await contract.numberMinted(
                     accountAddress
                 )
+                console.log(currentlyMinted)
                 setCurrentlyMinted(currentlyMinted)
                 if (currentlyMinted == 0) {
                     setCost((quantity - 1) * price)
@@ -213,7 +214,8 @@ function MintBlock() {
                                     className='bg-rose w-full h-16 font-VT323 text-white text-[1.7rem] hover:brightness-[1.3] disabled:bg-gray-500 disabled:hover:brightness-100'
                                     disabled={
                                         nearestSatgeAllowed.code !==
-                                        currentStage
+                                            currentStage ||
+                                        maxAllowed - currentlyMinted
                                     }
                                     onClick={mint}>
                                     Mint
