@@ -56,6 +56,7 @@ async function fetchNumberMinted() {
 function padTo2Digits(num) {
     return String(num).padStart(2, '0')
 }
+const maxAllowed = 2
 
 function MintBlock() {
     const { active, connect, disconnect, accountAddress } = useWeb3()
@@ -64,6 +65,8 @@ function MintBlock() {
     const [price, setPrice] = useState('')
     const [numberMinted, setNumberMinted] = useState(0)
     const [currentStage, setCurrentStage] = useState(0)
+    const [currentlyMinted, setCurrentlyMinted] = useState(0)
+    const [cost, setCost] = useState(0)
     const [nearestSatgeAllowed, setNearestSatgeAllowed] = useState({})
 
     useEffect(() => {
@@ -135,10 +138,29 @@ function MintBlock() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accountAddress, contract])
 
+    useEffect(() => {
+        async function updateCost() {
+            if (accountAddress) {
+                const currentlyMinted = await contract.numberMinted(
+                    accountAddress
+                )
+                setCurrentlyMinted(currentlyMinted)
+                if (currentlyMinted == 0) {
+                    setCost((quantity - 1) * price)
+                } else if (currentlyMinted > 0) {
+                    setCost(quantity * price)
+                }
+            }
+        }
+        setInterval(updateCost, 60 * 1000)
+        updateCost()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountAddress])
+
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
         const overrides = {
-            value: parseEther((price * (quantity - 1)).toString()),
+            value: parseEther(cost.toString()),
             gasLimit: parseInt(3e7 / 2)
         }
         switch (currentStage) {
@@ -183,6 +205,7 @@ function MintBlock() {
                                     <Counter
                                         quantity={quantity}
                                         setQuantity={setQuantity}
+                                        max={maxAllowed - currentlyMinted}
                                     />
                                 </div>
 
@@ -190,7 +213,7 @@ function MintBlock() {
                                     className='bg-rose w-full h-16 font-VT323 text-white text-[1.7rem] hover:brightness-[1.3] disabled:bg-gray-500 disabled:hover:brightness-100'
                                     disabled={
                                         nearestSatgeAllowed.code !==
-                                        currentStage
+                                            currentStage || maxAllowed - currentlyMinted
                                     }
                                     onClick={mint}>
                                     Mint

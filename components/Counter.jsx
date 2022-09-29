@@ -1,6 +1,6 @@
-function Counter({ quantity, setQuantity }) {
+function Counter({ quantity, setQuantity, max }) {
     function increase() {
-        if (quantity < 2) {
+        if (quantity < max) {
             setQuantity(quantity + 1)
         }
     }
@@ -25,7 +25,7 @@ function Counter({ quantity, setQuantity }) {
             <button
                 className='font-VT323 text-[2.7rem] text-black hover:bg-rose-medium rounded-xl h-fit px-2 disabled:text-gray-400'
                 onClick={increase}
-                disabled={quantity >= 2}>
+                disabled={quantity >= max}>
                 +
             </button>
         </div>
