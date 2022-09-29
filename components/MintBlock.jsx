@@ -146,6 +146,7 @@ function MintBlock() {
                 )
                 _currentlyMinted = parseInt(_currentlyMinted.toNumber())
                 console.log(_currentlyMinted)
+                console.log('price', price)
                 setCurrentlyMinted(_currentlyMinted)
                 if (_currentlyMinted == 0) {
                     setCost((quantity - 1) * parseInt(price))
@@ -237,8 +238,8 @@ function MintBlock() {
                                         </div>
                                         <div className='text-end text-3xl text-secondary'>
                                             {(
-                                                toString(parseInt(price) *
-                                                (quantity - 1))
+                                                price *
+                                                (quantity - 1)
                                             ).toString()}{' '}
                                             ETH
                                         </div>
