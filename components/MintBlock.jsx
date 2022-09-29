@@ -151,9 +151,9 @@ function MintBlock() {
                 console.log('price', price)
                 setCurrentlyMinted(_currentlyMinted)
                 if (_currentlyMinted == 0) {
-                    setCost((quantity - 1) * parseInt(price))
+                    setCost((quantity - 1) * parseFloat(price))
                 } else if (_currentlyMinted > 0) {
-                    setCost(quantity * parseInt(price))
+                    setCost(quantity * parseFloat(price))
                 }
             }
         }
