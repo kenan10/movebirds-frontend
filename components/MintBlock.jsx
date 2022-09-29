@@ -145,6 +145,7 @@ function MintBlock() {
                     accountAddress
                 )
                 currentlyMinted = currentlyMinted.toNumber()
+                console.log(currentlyMinted)
                 setCurrentlyMinted(currentlyMinted)
                 if (currentlyMinted == 0) {
                     setCost((quantity - 1) * price)
@@ -160,6 +161,7 @@ function MintBlock() {
 
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
+        console.log(cost.toString())
         const overrides = {
             value: parseEther(cost.toString()),
             gasLimit: parseInt(3e7 / 2)
