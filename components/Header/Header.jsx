@@ -28,7 +28,7 @@ function Header() {
                 </Button>
                 <Button
                     className='w-12 h-full bg-rose-medium'
-                    href='https://etherscan.io/address/0xf43E7f67b2d419e09882A2e16cEB5f2D129D4E11'>
+                    href='https://etherscan.io/address/0x2bc1af2a77db152c0892448fee1a22cb9694b293'>
                     <Image
                         src='/etherscan-logo.png'
                         alt='etherscan'

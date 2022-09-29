@@ -31,7 +31,7 @@ export default function Home() {
                         </h1>
                         <h2 className='max-w-[40rem] text-center text-xl text-secondary mx-auto mt-4'>
                             No public mint. No gas wars. Check our optimized{' '}
-                            <a href='https://etherscan.io/address/0xf43E7f67b2d419e09882A2e16cEB5f2D129D4E11'>
+                            <a href='https://etherscan.io/address/0x2bc1af2a77db152c0892448fee1a22cb9694b293'>
                                 <span className='text-title'>
                                     {' '}
                                     contract here
