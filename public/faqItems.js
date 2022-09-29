@@ -15,7 +15,7 @@ const faqItems = [
         number: '02'
     },
     {
-        text: `This is first NFT you need to mint axelroode mint pass (more details soon).  `,
+        text: `Details soon.  `,
         title: 'What utility?',
         number: '03'
     },
