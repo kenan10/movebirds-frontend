@@ -17,7 +17,7 @@ Object.keys(info.salesStages).forEach((key) => {
 
 function convertTZ(dateStr, tzString) {
     return new Date(
-        (typeof date === 'string' ? new Date(date) : date).toLocaleString(
+        (typeof dateStr === 'string' ? new Date(dateStr) : dateStr).toLocaleString(
             'en-US',
             { timeZone: tzString }
         )
