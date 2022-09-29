@@ -5,7 +5,7 @@ import { Web3Provider } from '@ethersproject/providers'
 import { Web3Context } from '../contexts/Web3/Web3Provider'
 
 let TARGET_CHAIN_ID = ''
-if (process.env.NEXT_PUBLIC_COUNTER_PRICE_API_KEY.includes('eth-mainnet')) {
+if (process.env.NEXT_PUBLIC_MINT_CONNECT_RPC.includes('eth-mainnet')) {
     TARGET_CHAIN_ID = '1'
 } else {
     TARGET_CHAIN_ID = '5'
