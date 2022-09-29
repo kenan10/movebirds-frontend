@@ -215,7 +215,7 @@ function MintBlock() {
                                     disabled={
                                         nearestSatgeAllowed.code !==
                                             currentStage ||
-                                        maxAllowed - currentlyMinted
+                                        maxAllowed - currentlyMinted == 0
                                     }
                                     onClick={mint}>
                                     Mint
