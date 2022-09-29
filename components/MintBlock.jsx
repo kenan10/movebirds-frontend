@@ -15,6 +15,15 @@ Object.keys(info.salesStages).forEach((key) => {
     })
 })
 
+function convertTZ(dateStr, tzString) {
+    return new Date(
+        (typeof date === 'string' ? new Date(date) : date).toLocaleString(
+            'en-US',
+            { timeZone: tzString }
+        )
+    )
+}
+
 function isObject(obj) {
     return obj instanceof Object && Object.keys(obj).length !== 0
 }
@@ -161,7 +170,7 @@ function MintBlock() {
                                       }!
                         Please, wait until this mint phase
                         starts at ${padTo2Digits(
-                            new Date(nearestSatgeAllowed.startsAt).getUTCHours()
+                            convertTZ(nearestSatgeAllowed.startsAt, "America/New_York").getUTCHours()
                         )}:${padTo2Digits(
                                           new Date(
                                               nearestSatgeAllowed.startsAt
