@@ -141,16 +141,16 @@ function MintBlock() {
     useEffect(() => {
         async function updateCost() {
             if (accountAddress) {
-                let currentlyMinted = await contract.numberMinted(
+                let _currentlyMinted = await contract.numberMinted(
                     accountAddress
                 )
-                currentlyMinted = currentlyMinted.toNumber()
-                console.log(currentlyMinted)
-                setCurrentlyMinted(currentlyMinted)
-                if (currentlyMinted == 0) {
-                    setCost((quantity - 1) * price)
-                } else if (currentlyMinted > 0) {
-                    setCost(quantity * price)
+                _currentlyMinted = parseInt(_currentlyMinted.toNumber())
+                console.log(_currentlyMinted)
+                setCurrentlyMinted(_currentlyMinted)
+                if (_currentlyMinted == 0) {
+                    setCost((quantity - 1) * parseInt(price))
+                } else if (_currentlyMinted > 0) {
+                    setCost(quantity * parseInt(price))
                 }
             }
         }
@@ -237,8 +237,8 @@ function MintBlock() {
                                         </div>
                                         <div className='text-end text-3xl text-secondary'>
                                             {(
-                                                price *
-                                                (quantity - 1)
+                                                toString(parseInt(price) *
+                                                (quantity - 1))
                                             ).toString()}{' '}
                                             ETH
                                         </div>
