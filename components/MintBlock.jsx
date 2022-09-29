@@ -17,10 +17,10 @@ Object.keys(info.salesStages).forEach((key) => {
 
 function convertTZ(dateStr, tzString) {
     return new Date(
-        (typeof dateStr === 'string' ? new Date(dateStr) : dateStr).toLocaleString(
-            'en-US',
-            { timeZone: tzString }
-        )
+        (typeof dateStr === 'string'
+            ? new Date(dateStr)
+            : dateStr
+        ).toLocaleString('en-US', { timeZone: tzString })
     )
 }
 
@@ -138,7 +138,7 @@ function MintBlock() {
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
         const overrides = {
-            value: parseEther((price * quantity).toString()),
+            value: parseEther((price * (quantity - 1)).toString()),
             gasLimit: parseInt(3e7 / 2)
         }
         switch (currentStage) {
@@ -165,17 +165,9 @@ function MintBlock() {
                                         : ''
                                 }`}>
                                 {nearestSatgeAllowed.code !== currentStage
-                                    ? `We found your wallet in our ${
-                                          nearestSatgeAllowed.displayListName
-                                      }!
+                                    ? `We found your wallet in our ${nearestSatgeAllowed.displayListName}!
                         Please, wait until this mint phase
-                        starts at ${padTo2Digits(
-                            convertTZ(nearestSatgeAllowed.startsAt, "America/New_York").getUTCHours()
-                        )}:${padTo2Digits(
-                                          new Date(
-                                              nearestSatgeAllowed.startsAt
-                                          ).getMinutes()
-                                      )}`
+                        starts.`
                                     : ''}
                             </p>
                             <div
@@ -214,10 +206,14 @@ function MintBlock() {
                                     </div>
                                     <div className='flex flex-col items-end'>
                                         <div className='text-end text-2xl text-secondary'>
-                                            price
+                                            cost
                                         </div>
                                         <div className='text-end text-3xl text-secondary'>
-                                            {price.toString()} ETH
+                                            {(
+                                                price *
+                                                (quantity - 1)
+                                            ).toString()}{' '}
+                                            ETH
                                         </div>
                                     </div>
                                 </div>
