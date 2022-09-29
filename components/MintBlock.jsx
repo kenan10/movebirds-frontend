@@ -141,10 +141,10 @@ function MintBlock() {
     useEffect(() => {
         async function updateCost() {
             if (accountAddress) {
-                const currentlyMinted = await contract.numberMinted(
+                let currentlyMinted = await contract.numberMinted(
                     accountAddress
                 )
-                console.log(currentlyMinted)
+                currentlyMinted = currentlyMinted.toNumber()
                 setCurrentlyMinted(currentlyMinted)
                 if (currentlyMinted == 0) {
                     setCost((quantity - 1) * price)
