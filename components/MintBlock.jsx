@@ -74,9 +74,7 @@ function MintBlock() {
             if (contract.signer) {
                 async function updatePrice() {
                     const price = await contract.tokenPrice()
-                    console.log('price', price)
                     setPrice(formatEther(price))
-                    console.log('price', formatEther(price))
                 }
                 updatePrice()
             }
@@ -147,8 +145,6 @@ function MintBlock() {
                     accountAddress
                 )
                 _currentlyMinted = parseInt(_currentlyMinted.toNumber())
-                console.log(_currentlyMinted)
-                console.log('price', price)
                 setCurrentlyMinted(_currentlyMinted)
                 if (_currentlyMinted == 0) {
                     setCost((quantity - 1) * parseFloat(price))
@@ -164,7 +160,6 @@ function MintBlock() {
 
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
-        console.log(cost.toString())
         const overrides = {
             value: parseEther(cost.toString()),
             gasLimit: parseInt(3e7 / 2)
