@@ -229,7 +229,7 @@ function MintBlock() {
                                             {numberMinted}/5000
                                         </div>
                                     </div>
-                                    <div className='flex flex-col items-end'>
+                                    {/* <div className='flex flex-col items-end'>
                                         <div className='text-end text-2xl text-secondary'>
                                             cost
                                         </div>
@@ -237,7 +237,7 @@ function MintBlock() {
                                             {cost.toString()}{' '}
                                             ETH
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </>
