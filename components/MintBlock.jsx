@@ -239,10 +239,7 @@ function MintBlock() {
                                             cost
                                         </div>
                                         <div className='text-end text-3xl text-secondary'>
-                                            {(
-                                                price *
-                                                (quantity - 1)
-                                            ).toString()}{' '}
+                                            {cost.toString()}{' '}
                                             ETH
                                         </div>
                                     </div>
