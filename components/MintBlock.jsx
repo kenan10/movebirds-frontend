@@ -160,7 +160,7 @@ function MintBlock() {
         setInterval(updateCost, 60 * 1000)
         updateCost()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [accountAddress])
+    }, [accountAddress, price])
 
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
