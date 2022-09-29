@@ -75,7 +75,8 @@ function MintBlock() {
                 async function updatePrice() {
                     const price = await contract.tokenPrice()
                     console.log('price', price)
-                    setPrice(formatEther(price.toString()))
+                    setPrice(formatEther(price))
+                    console.log('price', formatEther(price))
                 }
                 updatePrice()
             }
