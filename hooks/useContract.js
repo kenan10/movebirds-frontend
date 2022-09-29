@@ -4,7 +4,7 @@ import useWeb3 from './useWeb3'
 import { useEffect, useState } from 'react'
 
 let NET_NAME = ''
-if (process.env.NEXT_PUBLIC_COUNTER_PRICE_API_KEY.includes('eth-mainnet')) {
+if (process.env.NEXT_PUBLIC_MINT_CONNECT_RPC.includes('eth-mainnet')) {
     NET_NAME = 'mainnet'
 } else {
     NET_NAME = 'goerli'
