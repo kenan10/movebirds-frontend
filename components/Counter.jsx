@@ -1,14 +1,10 @@
 function Counter({ quantity, setQuantity, max }) {
     function increase() {
-        if (quantity < max) {
-            setQuantity(quantity + 1)
-        }
+        setQuantity(quantity + 1)
     }
 
     function decrease() {
-        if (quantity > 1) {
-            setQuantity(quantity - 1)
-        }
+        setQuantity(quantity - 1)
     }
 
     return (

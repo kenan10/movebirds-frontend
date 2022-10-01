@@ -56,20 +56,22 @@ async function fetchNumberMinted() {
 function padTo2Digits(num) {
     return String(num).padStart(2, '0')
 }
-const maxAllowed = 2
+const MAX_PER_ADDRESS = 2
 
 function MintBlock() {
     const { active, connect, disconnect, accountAddress } = useWeb3()
     const [quantity, setQuantity] = useState(1)
     const contract = useContract()
     const [price, setPrice] = useState('')
-    const [numberMinted, setNumberMinted] = useState(0)
+    const [numberMinted, setNumberMinted] = useState(5000)
     const [currentStage, setCurrentStage] = useState(0)
     const [currentlyMinted, setCurrentlyMinted] = useState(0)
     const [cost, setCost] = useState('')
     const [nearestSatgeAllowed, setNearestSatgeAllowed] = useState({})
+    const [supply, setSupply] = useState('')
 
     useEffect(() => {
+        let updateNumberMintedInterval
         if (contract) {
             if (contract.signer) {
                 async function updatePrice() {
@@ -85,13 +87,25 @@ function MintBlock() {
                     if (typeof numberMinted != 'undefined') {
                         setNumberMinted(numberMinted?.value.toString())
                     } else {
-                        setNumberMinted(0)
+                        setNumberMinted('?')
                     }
                 }
             }
             updateNumberMinted()
-            setInterval(updateNumberMinted, 60 * 1000 * 2)
+
+            async function updateSupply() {
+                const supply = await contract.maxSupply()
+                setSupply(supply.toString())
+            }
+            updateSupply()
+
+            updateNumberMintedInterval = setInterval(
+                updateNumberMinted,
+                60 * 1000 * 2
+            )
         }
+
+        return () => clearInterval(updateNumberMintedInterval)
     }, [contract])
 
     useEffect(() => {
@@ -139,6 +153,7 @@ function MintBlock() {
     }, [accountAddress, contract])
 
     useEffect(() => {
+        let updateCostInterval
         async function updateCost() {
             if (accountAddress && price) {
                 let _currentlyMinted = await contract.numberMinted(
@@ -147,24 +162,24 @@ function MintBlock() {
                 _currentlyMinted = parseInt(_currentlyMinted.toNumber())
                 setCurrentlyMinted(_currentlyMinted)
                 if (_currentlyMinted == 0) {
-                    console.log(price)
                     setCost((quantity - 1) * parseFloat(price))
                 } else if (_currentlyMinted > 0) {
-                    console.log(price)
                     setCost(quantity * parseFloat(price))
                 }
             }
         }
-        setInterval(updateCost, 60 * 1000)
+        updateCostInterval = setInterval(updateCost, 60 * 1000 * 2)
         updateCost()
+
+        return () => clearInterval(updateCostInterval)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [accountAddress, price])
+    }, [accountAddress, price, quantity])
 
     async function mint() {
         const signature = nearestSatgeAllowed.signedAddress
         const overrides = {
             value: parseEther(cost.toString()),
-            gasLimit: parseInt(220000)
+            gasLimit: parseInt(210000)
         }
         switch (currentStage) {
             case '1':
@@ -174,6 +189,9 @@ function MintBlock() {
                 await contract.mintWaitlist(quantity, signature, overrides)
             default:
                 break
+        }
+        if (quantity == 2) {
+            setCurrentlyMinted(2)
         }
     }
 
@@ -186,13 +204,25 @@ function MintBlock() {
                             <p
                                 className={`text-secondary text-2xl text-center max-w-lg ${
                                     nearestSatgeAllowed.code !== currentStage
-                                        ? 'mt-9'
+                                        ? 'mt-7 mb-2'
                                         : ''
                                 }`}>
                                 {nearestSatgeAllowed.code !== currentStage
-                                    ? `We found your wallet in our ${nearestSatgeAllowed.displayListName}!
+                                    ? `We found your wallet in our ${
+                                          nearestSatgeAllowed.displayListName
+                                      }!
                         Please, wait until this mint phase
-                        starts.`
+                        starts at ${padTo2Digits(
+                            convertTZ(
+                                nearestSatgeAllowed.startsAt,
+                                'America/New_York'
+                            ).getHours()
+                        )}:${padTo2Digits(
+                                          convertTZ(
+                                              nearestSatgeAllowed.startsAt,
+                                              'America/New_York'
+                                          ).getMinutes()
+                                      )} EDT`
                                     : ''}
                             </p>
                             <div
@@ -208,7 +238,7 @@ function MintBlock() {
                                     <Counter
                                         quantity={quantity}
                                         setQuantity={setQuantity}
-                                        max={maxAllowed - currentlyMinted}
+                                        max={MAX_PER_ADDRESS - currentlyMinted}
                                     />
                                 </div>
 
@@ -217,7 +247,7 @@ function MintBlock() {
                                     disabled={
                                         nearestSatgeAllowed.code !==
                                             currentStage ||
-                                        maxAllowed - currentlyMinted == 0
+                                        MAX_PER_ADDRESS - currentlyMinted == 0
                                     }
                                     onClick={mint}>
                                     Mint
@@ -228,7 +258,7 @@ function MintBlock() {
                                             minted
                                         </div>
                                         <div className='text-start text-3xl text-secondary'>
-                                            {numberMinted}/5000
+                                            {numberMinted}/{supply}
                                         </div>
                                     </div>
                                     <div className='flex flex-col items-end'>
@@ -265,7 +295,7 @@ function MintBlock() {
                         Connect Wallet
                     </Button>
                     <div className='text-center text-2xl text-secondary'>
-                        minted {numberMinted}/5000
+                        minted {numberMinted}/{supply}
                     </div>
                 </div>
             )}
