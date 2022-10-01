@@ -22,11 +22,6 @@
     },
     {
         "inputs": [],
-        "name": "ApproveToCaller",
-        "type": "error"
-    },
-    {
-        "inputs": [],
         "name": "BalanceQueryForZeroAddress",
         "type": "error"
     },
@@ -261,7 +256,7 @@
         ],
         "name": "approve",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {
@@ -505,7 +500,7 @@
         ],
         "name": "safeTransferFrom",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {
@@ -533,7 +528,7 @@
         ],
         "name": "safeTransferFrom",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {
@@ -742,7 +737,7 @@
         ],
         "name": "transferFrom",
         "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "type": "function"
     },
     {

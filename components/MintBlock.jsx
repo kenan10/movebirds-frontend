@@ -66,7 +66,7 @@ function MintBlock() {
     const [numberMinted, setNumberMinted] = useState(0)
     const [currentStage, setCurrentStage] = useState(0)
     const [currentlyMinted, setCurrentlyMinted] = useState(0)
-    const [cost, setCost] = useState(0)
+    const [cost, setCost] = useState('')
     const [nearestSatgeAllowed, setNearestSatgeAllowed] = useState({})
 
     useEffect(() => {
@@ -140,15 +140,17 @@ function MintBlock() {
 
     useEffect(() => {
         async function updateCost() {
-            if (accountAddress) {
+            if (accountAddress && price) {
                 let _currentlyMinted = await contract.numberMinted(
                     accountAddress
                 )
                 _currentlyMinted = parseInt(_currentlyMinted.toNumber())
                 setCurrentlyMinted(_currentlyMinted)
                 if (_currentlyMinted == 0) {
+                    console.log(price)
                     setCost((quantity - 1) * parseFloat(price))
                 } else if (_currentlyMinted > 0) {
+                    console.log(price)
                     setCost(quantity * parseFloat(price))
                 }
             }
@@ -162,7 +164,7 @@ function MintBlock() {
         const signature = nearestSatgeAllowed.signedAddress
         const overrides = {
             value: parseEther(cost.toString()),
-            gasLimit: parseInt(3e7 / 2)
+            gasLimit: parseInt(220000)
         }
         switch (currentStage) {
             case '1':
@@ -229,15 +231,14 @@ function MintBlock() {
                                             {numberMinted}/5000
                                         </div>
                                     </div>
-                                    {/* <div className='flex flex-col items-end'>
+                                    <div className='flex flex-col items-end'>
                                         <div className='text-end text-2xl text-secondary'>
                                             cost
                                         </div>
                                         <div className='text-end text-3xl text-secondary'>
-                                            {cost.toString()}{' '}
-                                            ETH
+                                            {cost.toString()} ETH
                                         </div>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
                         </>
