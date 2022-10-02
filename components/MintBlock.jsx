@@ -63,12 +63,12 @@ function MintBlock() {
     const [quantity, setQuantity] = useState(1)
     const contract = useContract()
     const [price, setPrice] = useState('')
-    const [numberMinted, setNumberMinted] = useState(5000)
+    const [numberMinted, setNumberMinted] = useState('?')
     const [currentStage, setCurrentStage] = useState(0)
     const [currentlyMinted, setCurrentlyMinted] = useState(0)
     const [cost, setCost] = useState('')
     const [nearestSatgeAllowed, setNearestSatgeAllowed] = useState({})
-    const [supply, setSupply] = useState('')
+    const [supply, setSupply] = useState('5000')
 
     useEffect(() => {
         let updateNumberMintedInterval
