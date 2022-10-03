@@ -115,25 +115,31 @@ function MintBlock() {
                 setCurrentStage(salesStageNumber)
                 const { data: allowedLists } =
                     (await fetchAddressLists(accountAddress)) || []
-                if (typeof allowedLists != 'undefined') {
+                if (typeof allowedLists !== 'undefined') {
                     const allowedStages = info.salesStages.filter((stage) =>
                         allowedLists.find((allowedList) => {
                             return allowedList.listName === stage.listName
                         })
                     )
-
                     let updateValue
                     if (
                         Array.isArray(allowedStages) &&
                         allowedStages.length !== 0
                     ) {
-                        const nearestSatgeAllowed = allowedStages.reduce(
-                            (prev, curr) => {
-                                return prev.startsAt < curr.startsAt
-                                    ? prev
-                                    : curr
+                        let nearestSatgeAllowed = allowedStages.find(
+                            (stage) => {
+                                return stage.code == salesStageNumber
                             }
                         )
+                        if (typeof nearestSatgeAllowed === 'undefined') {
+                            nearestSatgeAllowed = allowedStages.reduce(
+                                (prev, curr) => {
+                                    return prev.startsAt < curr.startsAt
+                                        ? prev
+                                        : curr
+                                }
+                            )
+                        }
                         updateValue = {
                             ...nearestSatgeAllowed,
                             signedAddress: allowedLists.find((allowedList) => {
@@ -181,17 +187,25 @@ function MintBlock() {
             value: parseEther(cost.toString()),
             gasLimit: parseInt(210000)
         }
-        switch (currentStage) {
-            case '1':
-                await contract.mintAllowlist(quantity, signature, overrides)
-                break
-            case '2':
-                await contract.mintWaitlist(quantity, signature, overrides)
-            default:
-                break
-        }
-        if (quantity == 2) {
-            setCurrentlyMinted(2)
+        try {
+            switch (currentStage) {
+                case '1':
+                    await contract.mintAllowlist(quantity, signature, overrides)
+                    break
+                case '2':
+                    await contract.mintWaitlist(quantity, signature, overrides)
+                default:
+                    break
+            }
+            if (quantity == 2) {
+                setCurrentlyMinted(2)
+            }
+        } catch (e) {
+            if (e.code == 4001) {
+                console.log('Txn rejected')
+            } else {
+                console.error(e)
+            }
         }
     }
 
