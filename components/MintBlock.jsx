@@ -101,7 +101,7 @@ function MintBlock() {
 
             updateNumberMintedInterval = setInterval(
                 updateNumberMinted,
-                60 * 1000 * 2
+                60 * 1000 * 10
             )
         }
 
@@ -174,7 +174,7 @@ function MintBlock() {
                 }
             }
         }
-        updateCostInterval = setInterval(updateCost, 60 * 1000 * 2)
+        updateCostInterval = setInterval(updateCost, 60 * 1000 * 5)
         updateCost()
 
         return () => clearInterval(updateCostInterval)
