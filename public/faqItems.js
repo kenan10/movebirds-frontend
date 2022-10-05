@@ -5,9 +5,9 @@ const faqItems = [
         number: '01'
     },
     {
-        text: `September 29: 
-        13:00 EDT Allowlist: First FREE, second — 0.005 ETH.
-        14:00 EDT Waitlist: First FREE, second — 0.005 ETH.
+        text: `October 6: 
+        11:00 EDT Allowlist: First FREE, second — 0.005 ETH.
+        12:00 EDT Waitlist: First FREE, second — 0.005 ETH.
         When reveal? 20 min after sold out.`,
         title: 'Ok, what mint schedule will be?',
         number: '02'
